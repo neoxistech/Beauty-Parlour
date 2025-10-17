@@ -13,6 +13,14 @@ const HeroSection = () => {
     "Transforming Moments Into Timeless Beauty.",
     "Elegance Crafted for You."
   ];
+
+  // Mobile phrases with line breaks
+  const mobilePhases = [
+    "Where Beauty\nMeets Confidence.",
+    "Transforming Moments\nInto Timeless Beauty.",
+    "Elegance Crafted\nfor You."
+  ];
+
   const TYPING_SPEED = 80;   // ms per character while typing
   const DELETING_SPEED = 40; // ms per character while deleting
   const DELAY_AFTER = 1500;  // pause after a phrase completes (ms)
@@ -20,9 +28,22 @@ const HeroSection = () => {
   const [text, setText] = useState("");
   const [phraseIndex, setPhraseIndex] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Check screen size
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 640); // sm breakpoint
+    };
+
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   useEffect(() => {
-    const currentPhrase = phrases[phraseIndex % phrases.length];
+    const currentPhrases = isMobile ? mobilePhases : phrases;
+    const currentPhrase = currentPhrases[phraseIndex % currentPhrases.length];
 
     let timeout;
     if (!isDeleting && text !== currentPhrase) {
@@ -41,11 +62,11 @@ const HeroSection = () => {
     } else if (isDeleting && text === "") {
       // once deleted, move to next phrase
       setIsDeleting(false);
-      setPhraseIndex((prev) => (prev + 1) % phrases.length);
+      setPhraseIndex((prev) => (prev + 1) % currentPhrases.length);
     }
 
     return () => clearTimeout(timeout);
-  }, [text, isDeleting, phraseIndex]);
+  }, [text, isDeleting, phraseIndex, isMobile, phrases, mobilePhases]);
 
 
 
@@ -121,10 +142,13 @@ const HeroSection = () => {
           {/* Main Tagline Animation */}
           <div className="mb-12">
             <h2
-              className={`font-playfair text-2xl sm:text-3xl md:text-5xl text-white drop-shadow-xl border-r-2 border-white inline-block whitespace-nowrap overflow-hidden animate-typing`}
+              className={`font-playfair text-2xl sm:text-3xl md:text-5xl text-white drop-shadow-xl ${isMobile
+                  ? 'text-center whitespace-pre-line'
+                  : 'border-r-2 border-white inline-block whitespace-nowrap overflow-hidden animate-typing'
+                }`}
             >
-              <span className="inline-block">{text}</span>
-              <span className="typing-cursor ml-1" aria-hidden="true" />
+              <span className={isMobile ? 'block' : 'inline-block'}>{text}</span>
+              {/* <span className="typing-cursor ml-1" aria-hidden="true" /> */}
             </h2>
           </div>
 
