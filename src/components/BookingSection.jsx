@@ -87,7 +87,7 @@ const BookingSection = () => {
       phone: formData.phone,
     }
     // Send data to Google Sheet via Web App
-    fetch("https://script.google.com/macros/s/AKfycbzbEgJPDXdwB_1qAkQ8crwBrmSdZ27nAuFOMI7dlOvUjDeJvwE6TjjV-awX6QTePtM7/exec", {
+    fetch("https://script.google.com/macros/s/AKfycbz4_vpq91kLqQz29-8iS5OUeljN3Po2NFlln2vq384bqMJKaz8W0PD4QC0qxjHw5_w/exec", {
       method: "POST",
       body: JSON.stringify(dataToSend),
       headers: { "Content-Type": "application/json" }
