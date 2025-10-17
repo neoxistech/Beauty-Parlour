@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Beauty Parlour - Where Beauty Becomes Power</title>
+  <meta name="description"
+    content="Luxury beauty parlour offering makeup, hair, nails, bridal services. Experience elegance and transformation at LUXURY STUDIO." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;500;600&family=Dancing+Script:wght@400;700&display=swap"
+    rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'blush': '#E91E63',
+            'blush-light': '#F8BBD9',
+            'ivory': '#FFFFFF',
+            'ivory-warm': '#FDF8F5',
+            'champagne': '#B8860B',
+            'champagne-light': '#F4E4BC',
+            'velvet': '#1A1A1A',
+            'velvet-light': '#2D2D2D',
+            'accent-pink': '#FF6B9D',
+            'accent-gold': '#FFD700',
+          },
+          fontFamily: {
+            'playfair': ['Playfair Display', 'serif'],
+            'poppins': ['Poppins', 'sans-serif'],
+            'signature': ['Dancing Script', 'cursive'],
+          },
+          animation: {
+            'float': 'float 6s ease-in-out infinite',
+            'shimmer': 'shimmer 2s linear infinite',
+            'glow': 'glow 2s ease-in-out infinite alternate',
+          },
+          keyframes: {
+            float: {
+              '0%, 100%': { transform: 'translateY(0px)' },
+              '50%': { transform: 'translateY(-20px)' },
+            },
+            shimmer: {
+              '0%': { transform: 'translateX(-100%)' },
+              '100%': { transform: 'translateX(100%)' },
+            },
+            glow: {
+              '0%': { boxShadow: '0 0 20px rgba(239, 184, 200, 0.5)' },
+              '100%': { boxShadow: '0 0 30px rgba(239, 184, 200, 0.8)' },
+            },
+          },
+        },
+      },
+    }
+  </script>
+</head>
+
+<body>
+  <div id="root"></div>
+  <script type="module" src="/src/main.jsx"></script>
+</body>
+
+</html>
