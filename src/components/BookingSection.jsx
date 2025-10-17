@@ -16,6 +16,7 @@ const BookingSection = () => {
     phone: ''
   })
   const [showSuccess, setShowSuccess] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
   const sectionRef = useRef(null)
 
   useEffect(() => {
@@ -77,6 +78,8 @@ const BookingSection = () => {
   }
 
   const handleSubmit = () => {
+    setIsLoading(true);
+
     // Create FormData instead of JSON to avoid CORS issues
     const formDataToSend = new FormData();
     formDataToSend.append('services', formData.service.join(','));
@@ -95,6 +98,7 @@ const BookingSection = () => {
       .then(response => response.json())
       .then(result => {
         console.log("Data successfully sent to Google Sheet:", result);
+        setIsLoading(false);
         // Show success and reset form
         setShowSuccess(true);
         setTimeout(() => {
@@ -113,6 +117,7 @@ const BookingSection = () => {
       })
       .catch(error => {
         console.error("Error sending data:", error);
+        setIsLoading(false);
         alert("There was an error submitting your booking. Please try again.");
       });
   }
@@ -293,7 +298,7 @@ const BookingSection = () => {
           )}
 
           {/* Step 4: Confirmation */}
-          {currentStep === 4 && !showSuccess && (
+          {currentStep === 4 && !showSuccess && !isLoading && (
             <div className="space-y-6">
               <h3 className="font-playfair text-2xl font-bold text-velvet text-center mb-8">Confirm Your Booking</h3>
               <div className="bg-gradient-to-r from-blush/10 to-champagne/10 rounded-2xl p-6 space-y-4">
@@ -326,6 +331,26 @@ const BookingSection = () => {
                     }
                   </span>
                 </div>
+              </div>
+            </div>
+          )}
+
+          {/* Loading State */}
+          {isLoading && (
+            <div className="text-center space-y-6">
+              <div className="w-20 h-20 bg-gradient-to-r from-blush to-champagne rounded-full flex items-center justify-center mx-auto animate-spin">
+                <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center">
+                  <div className="w-8 h-8 bg-gradient-to-r from-blush to-champagne rounded-full animate-pulse"></div>
+                </div>
+              </div>
+              <h3 className="font-playfair text-3xl font-bold text-velvet">Confirming Your Booking...</h3>
+              <p className="font-poppins text-lg text-velvet/80">
+                Please wait while we process your appointment request.
+              </p>
+              <div className="flex justify-center space-x-1">
+                <div className="w-2 h-2 bg-champagne rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
+                <div className="w-2 h-2 bg-champagne rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
+                <div className="w-2 h-2 bg-champagne rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
               </div>
             </div>
           )}
@@ -364,12 +389,12 @@ const BookingSection = () => {
           )}
 
           {/* Navigation Buttons */}
-          {!showSuccess && (
+          {!showSuccess && !isLoading && (
             <div className="flex justify-between mt-8">
               <button
                 onClick={prevStep}
-                disabled={currentStep === 1}
-                className={`px-6 py-3 rounded-full font-poppins font-medium transition-all duration-300 ${currentStep === 1
+                disabled={currentStep === 1 || isLoading}
+                className={`px-6 py-3 rounded-full font-poppins font-medium transition-all duration-300 ${currentStep === 1 || isLoading
                   ? 'opacity-50 cursor-not-allowed bg-gray-200 text-gray-500'
                   : 'bg-white border-2 border-velvet text-velvet hover:bg-velvet hover:text-white'
                   }`}
@@ -379,13 +404,20 @@ const BookingSection = () => {
 
               <button
                 onClick={currentStep === 4 ? handleSubmit : nextStep}
-                disabled={!isStepValid()}
-                className={`px-8 py-3 rounded-full font-poppins font-semibold transition-all duration-300 transform hover:scale-105 ${isStepValid()
+                disabled={!isStepValid() || isLoading}
+                className={`px-8 py-3 rounded-full font-poppins font-semibold transition-all duration-300 transform hover:scale-105 ${isStepValid() && !isLoading
                   ? 'bg-gradient-to-r from-blush to-champagne text-white shadow-lg hover:shadow-xl'
                   : 'opacity-50 cursor-not-allowed bg-gray-300 text-gray-500'
                   }`}
               >
-                {currentStep === 4 ? 'Confirm Booking' : 'Next Step'}
+                {isLoading ? (
+                  <span className="flex items-center gap-2">
+                    <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                    Confirming...
+                  </span>
+                ) : (
+                  currentStep === 4 ? 'Confirm Booking' : 'Next Step'
+                )}
               </button>
             </div>
           )}
