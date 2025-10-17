@@ -32,6 +32,11 @@ export default {
           "50%": { width: "34ch" },
           "100%": { width: "0ch" },
         },
+        "typing-mobile": {
+          "0%": { width: "0ch" },
+          "50%": { width: "20ch" },
+          "100%": { width: "0ch" },
+        },
         blink: {
           "0%, 100%": { borderColor: "transparent" },
           "50%": { borderColor: "white" },
@@ -42,6 +47,7 @@ export default {
         shimmer: "shimmer 2s linear infinite",
         glow: "glow 2s ease-in-out infinite alternate",
         typing: "typing 8s steps(34) infinite, blink .8s step-end infinite",
+        "typing-mobile": "typing-mobile 6s steps(20) infinite, blink .8s step-end infinite",
       },
     },
   },

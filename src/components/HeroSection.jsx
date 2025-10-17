@@ -13,6 +13,13 @@ const HeroSection = () => {
     "Transforming Moments Into Timeless Beauty.",
     "Elegance Crafted for You."
   ];
+
+  // Mobile-friendly phrases (shorter for small screens)
+  const mobilePhases = [
+    "Where Beauty\nMeets Confidence.",
+    "Transforming Moments\nInto Timeless Beauty.",
+    "Elegance Crafted\nfor You."
+  ];
   const TYPING_SPEED = 80;   // ms per character while typing
   const DELETING_SPEED = 40; // ms per character while deleting
   const DELAY_AFTER = 1500;  // pause after a phrase completes (ms)
@@ -20,9 +27,22 @@ const HeroSection = () => {
   const [text, setText] = useState("");
   const [phraseIndex, setPhraseIndex] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Check if screen is mobile size
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   useEffect(() => {
-    const currentPhrase = phrases[phraseIndex % phrases.length];
+    const currentPhrases = isMobile ? mobilePhases : phrases;
+    const currentPhrase = currentPhrases[phraseIndex % currentPhrases.length];
 
     let timeout;
     if (!isDeleting && text !== currentPhrase) {
@@ -41,11 +61,12 @@ const HeroSection = () => {
     } else if (isDeleting && text === "") {
       // once deleted, move to next phrase
       setIsDeleting(false);
-      setPhraseIndex((prev) => (prev + 1) % phrases.length);
+      const currentPhrases = isMobile ? mobilePhases : phrases;
+      setPhraseIndex((prev) => (prev + 1) % currentPhrases.length);
     }
 
     return () => clearTimeout(timeout);
-  }, [text, isDeleting, phraseIndex]);
+  }, [text, isDeleting, phraseIndex, isMobile, phrases, mobilePhases]);
 
 
 
@@ -105,7 +126,7 @@ const HeroSection = () => {
         <div className="text-center max-w-4xl">
           {/* Logo */}
           <div className={`mb-8 transition-all duration-2000 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-            <h1 className="font-playfair text-7xl md:text-8xl font-bold text-white mb-4 drop-shadow-2xl">
+            <h1 className="font-playfair text-4xl sm:text-6xl md:text-8xl font-bold text-white mb-4 drop-shadow-2xl">
               LUXURY STUDIO
             </h1>
             <div className="w-32 h-1 bg-gradient-to-r from-blush to-accent-gold mx-auto"></div>
@@ -113,7 +134,7 @@ const HeroSection = () => {
 
           {/* Tagline */}
           <div className={`mb-6 transition-all duration-1000 delay-300 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-            <p className="font-signature text-3xl md:text-5xl text-champagne mb-2 drop-shadow-xl">Luxury Beauty Redefined</p>
+            <p className="font-signature text-2xl sm:text-3xl md:text-5xl text-champagne mb-2 drop-shadow-xl">Luxury Beauty Redefined</p>
           </div>
 
 
@@ -121,26 +142,29 @@ const HeroSection = () => {
           {/* Main Tagline Animation */}
           <div className="mb-12">
             <h2
-              className={`font-playfair text-4xl md:text-5xl text-white drop-shadow-xl border-r-2 border-white inline-block whitespace-nowrap overflow-hidden animate-typing`}
+              className={`font-playfair text-2xl sm:text-3xl md:text-5xl text-white drop-shadow-xl ${isMobile ? 'text-center' : 'border-r-2 border-white inline-block whitespace-nowrap overflow-hidden'}`}
             >
-              <span className="inline-block break-words">{text}</span>
-              <span className="typing-cursor ml-1" aria-hidden="true" />
+              <span className={`${isMobile ? 'whitespace-pre-line' : 'inline-block'}`}>
+                {text}
+              </span>
+              {!isMobile && <span className="typing-cursor ml-1" aria-hidden="true" />}
+              {isMobile && <span className="typing-cursor-mobile" aria-hidden="true" />}
             </h2>
           </div>
 
 
 
           {/* CTA Buttons */}
-          <div className={`flex flex-col sm:flex-row gap-6 justify-center transition-all duration-1000 delay-1500 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-            <button className="group relative px-8 py-4 bg-gradient-to-r from-blush to-accent-pink text-white font-poppins font-semibold rounded-full overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl">
+          <div className={`flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center px-4 transition-all duration-1000 delay-1500 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+            <button className="group relative px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-blush to-accent-pink text-white font-poppins font-semibold rounded-full overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl text-sm sm:text-base">
               <span className="relative z-10">Book Appointment</span>
               <div className="absolute inset-0 bg-gradient-to-r from-accent-gold to-accent-pink opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               <div className="absolute inset-0 bg-white/20 transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
             </button>
 
-            <button className="group px-8 py-4 border-2 border-white text-white font-poppins font-semibold rounded-full transition-all duration-300 hover:bg-white hover:text-velvet hover:scale-105 backdrop-blur-sm">
-              <span className="flex items-center gap-2">
-                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+            <button className="group px-6 sm:px-8 py-3 sm:py-4 border-2 border-white text-white font-poppins font-semibold rounded-full transition-all duration-300 hover:bg-white hover:text-velvet hover:scale-105 backdrop-blur-sm text-sm sm:text-base">
+              <span className="flex items-center gap-2 justify-center">
+                <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="currentColor" viewBox="0 0 20 20">
                   <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
                 </svg>
                 Call Now
