@@ -121,9 +121,9 @@ const HeroSection = () => {
           {/* Main Tagline Animation */}
           <div className="mb-12">
             <h2
-              className={`font-playfair text-2xl md:text-5xl text-white drop-shadow-xl border-r-2 border-white inline-block lg:whitespace-nowrap overflow-hidden animate-typing`}
+              className={`font-playfair text-4xl md:text-5xl text-white drop-shadow-xl border-r-2 border-white inline-block  animate-typing`}
             >
-              <span className="inline-block">{text}</span>
+              <span className="inline-block break-words">{text}</span>
               <span className="typing-cursor ml-1" aria-hidden="true" />
             </h2>
           </div>
