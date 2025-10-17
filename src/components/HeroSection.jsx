@@ -105,7 +105,7 @@ const HeroSection = () => {
         <div className="text-center max-w-4xl">
           {/* Logo */}
           <div className={`mb-8 transition-all duration-2000 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-            <h1 className="font-playfair text-7xl md:text-8xl font-bold text-white mb-4 drop-shadow-2xl">
+            <h1 className="font-playfair text-4xl sm:text-6xl md:text-8xl font-bold text-white mb-4 drop-shadow-2xl">
               LUXURY STUDIO
             </h1>
             <div className="w-32 h-1 bg-gradient-to-r from-blush to-accent-gold mx-auto"></div>
@@ -113,7 +113,7 @@ const HeroSection = () => {
 
           {/* Tagline */}
           <div className={`mb-6 transition-all duration-1000 delay-300 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-            <p className="font-signature text-3xl md:text-5xl text-champagne mb-2 drop-shadow-xl">Luxury Beauty Redefined</p>
+            <p className="font-signature text-2xl sm:text-3xl md:text-5xl text-champagne mb-2 drop-shadow-xl">Luxury Beauty Redefined</p>
           </div>
 
 
@@ -121,7 +121,7 @@ const HeroSection = () => {
           {/* Main Tagline Animation */}
           <div className="mb-12">
             <h2
-              className={`font-playfair text-4xl md:text-5xl text-white drop-shadow-xl border-r-2 border-white inline-block whitespace-nowrap overflow-hidden animate-typing`}
+              className={`font-playfair text-2xl sm:text-3xl md:text-5xl text-white drop-shadow-xl border-r-2 border-white inline-block whitespace-nowrap overflow-hidden animate-typing`}
             >
               <span className="inline-block">{text}</span>
               <span className="typing-cursor ml-1" aria-hidden="true" />
@@ -131,16 +131,16 @@ const HeroSection = () => {
 
 
           {/* CTA Buttons */}
-          <div className={`flex flex-col sm:flex-row gap-6 justify-center transition-all duration-1000 delay-1500 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-            <button className="group relative px-8 py-4 bg-gradient-to-r from-blush to-accent-pink text-white font-poppins font-semibold rounded-full overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl">
+          <div className={`flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center px-4 transition-all duration-1000 delay-1500 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+            <button className="group relative px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-blush to-accent-pink text-white font-poppins font-semibold rounded-full overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl text-sm sm:text-base">
               <span className="relative z-10">Book Appointment</span>
               <div className="absolute inset-0 bg-gradient-to-r from-accent-gold to-accent-pink opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               <div className="absolute inset-0 bg-white/20 transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
             </button>
 
-            <button className="group px-8 py-4 border-2 border-white text-white font-poppins font-semibold rounded-full transition-all duration-300 hover:bg-white hover:text-velvet hover:scale-105 backdrop-blur-sm">
-              <span className="flex items-center gap-2">
-                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+            <button className="group px-6 sm:px-8 py-3 sm:py-4 border-2 border-white text-white font-poppins font-semibold rounded-full transition-all duration-300 hover:bg-white hover:text-velvet hover:scale-105 backdrop-blur-sm text-sm sm:text-base">
+              <span className="flex items-center gap-2 justify-center">
+                <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="currentColor" viewBox="0 0 20 20">
                   <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
                 </svg>
                 Call Now
