@@ -105,7 +105,7 @@ const HeroSection = () => {
         <div className="text-center max-w-4xl">
           {/* Logo */}
           <div className={`mb-8 transition-all duration-2000 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-            <h1 className="font-playfair text-2xl sm:text-4xl md:text-5xl font-bold text-white mb-4 drop-shadow-2xl">
+            <h1 className="font-playfair text-3xl sm:text-4xl md:text-6xl font-bold text-white mb-4 drop-shadow-2xl">
               LUXURY STUDIO
             </h1>
             <div className="w-32 h-1 bg-gradient-to-r from-blush to-accent-gold mx-auto"></div>
