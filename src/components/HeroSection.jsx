@@ -67,7 +67,7 @@ const HeroSection = () => {
 
 
       </div>
- {/*  */}
+      {/*  */}
       {/* Slide Indicators */}
       <div>
         {/* <div className="absolute bottom-20 left-1/2 transform -translate-x-1/2 z-30 flex space-x-3">
@@ -121,7 +121,7 @@ const HeroSection = () => {
           {/* Main Tagline Animation */}
           <div className="mb-12">
             <h2
-              className={`font-playfair text-4xl md:text-5xl text-white drop-shadow-xl border-r-2 border-white inline-block whitespace-nowrap overflow-hidden animate-typing`}
+              className={`font-playfair text-2xl md:text-5xl text-white drop-shadow-xl border-r-2 border-white inline-block whitespace-nowrap overflow-hidden animate-typing`}
             >
               <span className="inline-block">{text}</span>
               <span className="typing-cursor ml-1" aria-hidden="true" />
