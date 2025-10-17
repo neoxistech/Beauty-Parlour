@@ -77,20 +77,20 @@ const BookingSection = () => {
   }
 
   const handleSubmit = () => {
+    // Create FormData instead of JSON to avoid CORS issues
+    const formDataToSend = new FormData();
+    formDataToSend.append('services', formData.service.join(','));
+    formDataToSend.append('date', formData.date);
+    formDataToSend.append('time', formData.time);
+    formDataToSend.append('name', formData.name);
+    formDataToSend.append('email', formData.email);
+    formDataToSend.append('phone', formData.phone);
+    formDataToSend.append('confirmation', 'Pending');
 
-    const dataToSend = {
-      services: formData.service.join(','),
-      date: formData.date,
-      time: formData.time,
-      name: formData.name,
-      email: formData.email,
-      phone: formData.phone,
-    }
-    // Send data to Google Sheet via Web App
-    fetch("https://script.google.com/macros/s/AKfycbz4_vpq91kLqQz29-8iS5OUeljN3Po2NFlln2vq384bqMJKaz8W0PD4QC0qxjHw5_w/exec", {
+    // Send data to Google Sheet via Web App using FormData
+    fetch("https://script.google.com/macros/s/AKfycby6OvKJ_7Hd9QobgdJRedzUzY99ohx1eBMGdFfd69LilB9cN7PlryMXQUz6px_Eka5U/exec", {
       method: "POST",
-      body: JSON.stringify(dataToSend),
-      headers: { "Content-Type": "application/json" }
+      body: formDataToSend
     })
       .then(response => response.json())
       .then(result => {
@@ -119,7 +119,7 @@ const BookingSection = () => {
 
   const isStepValid = () => {
     switch (currentStep) {
-      case 1: return formData.service !== ''
+      case 1: return formData.service.length > 0
       case 2: return formData.date !== '' && formData.time !== ''
       case 3: return formData.name !== '' && formData.email !== '' && formData.phone !== ''
       default: return true
@@ -300,7 +300,7 @@ const BookingSection = () => {
                 <div className="flex justify-between items-center">
                   <span className="font-poppins text-velvet/70">Service:</span>
                   <span className="font-poppins font-medium text-velvet">
-                    {services.find(s => s.id === formData.service)?.name}
+                    {formData.service.map(id => services.find(s => s.id === id)?.name).join(', ')}
                   </span>
                 </div>
                 <div className="flex justify-between items-center">
