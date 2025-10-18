@@ -175,7 +175,7 @@ const BookingSection = () => {
       <div className="max-w-4xl mx-auto relative z-10">
         {/* Header */}
         <div className={`text-center mb-16 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-          <h2 className="font-playfair text-5xl md:text-6xl font-bold text-velvet mb-6">
+          <h2 className="font-playfair text-4xl md:text-6xl font-bold text-velvet mb-6">
             Reserve Your <span className="text-transparent bg-clip-text bg-gradient-to-r from-blush to-champagne">Transformation</span>
           </h2>
           <div className="w-32 h-1 bg-gradient-to-r from-blush to-champagne mx-auto mb-6"></div>
@@ -186,33 +186,73 @@ const BookingSection = () => {
 
         {/* Progress Bar */}
         <div className={`mb-12 transition-all duration-1000 delay-300 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-          <div className="flex items-center justify-center space-x-4 mb-4">
-            {[1, 2, 3, 4].map((step) => (
-              <div key={step} className="flex items-center">
-                <div className={`w-10 h-10 rounded-full flex items-center justify-center font-poppins font-semibold transition-all duration-300 ${step <= currentStep
-                  ? 'bg-gradient-to-r from-blush to-champagne text-white'
-                  : 'bg-white/80 text-velvet/60'
-                  }`}>
-                  {step < currentStep ? (
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
-                    </svg>
-                  ) : (
-                    step
+          {/* Desktop Progress Bar */}
+          <div className="hidden sm:block">
+            <div className="flex items-center justify-center space-x-4 mb-4">
+              {[1, 2, 3, 4].map((step) => (
+                <div key={step} className="flex items-center">
+                  <div className={`w-10 h-10 rounded-full flex items-center justify-center font-poppins font-semibold transition-all duration-300 ${step <= currentStep
+                    ? 'bg-gradient-to-r from-blush to-champagne text-white'
+                    : 'bg-white/80 text-velvet/60'
+                    }`}>
+                    {step < currentStep ? (
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                      </svg>
+                    ) : (
+                      step
+                    )}
+                  </div>
+                  {step < 4 && (
+                    <div className={`w-16 h-1 mx-2 transition-all duration-300 ${step < currentStep ? 'bg-gradient-to-r from-blush to-champagne' : 'bg-white/40'
+                      }`}></div>
                   )}
                 </div>
-                {step < 4 && (
-                  <div className={`w-16 h-1 mx-2 transition-all duration-300 ${step < currentStep ? 'bg-gradient-to-r from-blush to-champagne' : 'bg-white/40'
-                    }`}></div>
-                )}
-              </div>
-            ))}
+              ))}
+            </div>
+            <div className="flex justify-center space-x-8 text-sm font-poppins text-velvet/70">
+              <span className={currentStep >= 1 ? 'text-champagne font-medium' : ''}>Service</span>
+              <span className={currentStep >= 2 ? 'text-champagne font-medium' : ''}>Date & Time</span>
+              <span className={currentStep >= 3 ? 'text-champagne font-medium' : ''}>Details</span>
+              <span className={currentStep >= 4 ? 'text-champagne font-medium' : ''}>Confirm</span>
+            </div>
           </div>
-          <div className="flex justify-center space-x-8 text-sm font-poppins text-velvet/70">
-            <span className={currentStep >= 1 ? 'text-champagne font-medium' : ''}>Service</span>
-            <span className={currentStep >= 2 ? 'text-champagne font-medium' : ''}>Date & Time</span>
-            <span className={currentStep >= 3 ? 'text-champagne font-medium' : ''}>Details</span>
-            <span className={currentStep >= 4 ? 'text-champagne font-medium' : ''}>Confirm</span>
+
+          {/* Mobile Progress Bar */}
+          <div className="sm:hidden">
+            <div className="flex items-center justify-between mb-6 px-4">
+              {[1, 2, 3, 4].map((step) => (
+                <div key={step} className="flex flex-col items-center">
+                  <div className={`w-8 h-8 rounded-full flex items-center justify-center font-poppins font-semibold text-sm transition-all duration-300 ${step <= currentStep
+                    ? 'bg-gradient-to-r from-blush to-champagne text-white'
+                    : 'bg-white/80 text-velvet/60'
+                    }`}>
+                    {step < currentStep ? (
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                      </svg>
+                    ) : (
+                      step
+                    )}
+                  </div>
+                  <span className={`text-xs font-poppins mt-2 text-center ${currentStep >= step ? 'text-champagne font-medium' : 'text-velvet/70'}`}>
+                    {step === 1 && 'Service'}
+                    {step === 2 && 'Date & Time'}
+                    {step === 3 && 'Details'}
+                    {step === 4 && 'Confirm'}
+                  </span>
+                </div>
+              ))}
+            </div>
+            
+            {/* Mobile Progress Line */}
+            <div className="relative mb-4 mx-4">
+              <div className="absolute top-0 left-0 w-full h-1 bg-white/40 rounded-full"></div>
+              <div 
+                className="absolute top-0 left-0 h-1 bg-gradient-to-r from-blush to-champagne rounded-full transition-all duration-500"
+                style={{ width: `${((currentStep - 1) / 3) * 100}%` }}
+              ></div>
+            </div>
           </div>
         </div>
 

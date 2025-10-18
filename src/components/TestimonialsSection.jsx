@@ -93,7 +93,7 @@ const TestimonialsSection = () => {
       <div className="max-w-7xl mx-auto relative z-10">
         {/* Header */}
         <div className={`text-center mb-16 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-          <h2 className="font-playfair text-5xl md:text-6xl font-bold text-velvet mb-6">
+          <h2 className="font-playfair text-4xl md:text-6xl font-bold text-velvet mb-6">
             What Our <span className="text-transparent bg-clip-text bg-gradient-to-r from-blush to-champagne">Clients Say</span>
           </h2>
           <div className="w-32 h-1 bg-gradient-to-r from-blush to-champagne mx-auto mb-6"></div>
