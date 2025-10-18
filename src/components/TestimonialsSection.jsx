@@ -73,7 +73,7 @@ const TestimonialsSection = () => {
   }, [testimonials.length])
 
   return (
-    <section ref={sectionRef} className="py-20 px-4 bg-white relative overflow-hidden">
+    <section id="testimonials" ref={sectionRef} className="py-20 px-4 bg-white relative overflow-hidden">
       {/* Floating Background Elements */}
       <div className="absolute inset-0">
         {[...Array(15)].map((_, i) => (
@@ -195,7 +195,14 @@ const TestimonialsSection = () => {
         {/* CTA */}
         <div className={`text-center mt-16 transition-all duration-1000 delay-900 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
           <p className="font-poppins text-lg text-velvet/70 mb-6">Ready to create your own beautiful story?</p>
-          <button className="px-8 py-4 bg-gradient-to-r from-blush to-champagne text-white font-poppins font-semibold rounded-full hover:shadow-2xl transform hover:scale-105 transition-all duration-300">
+          <button 
+          onClick={() => {
+                const bookingSection = document.getElementById('booking-section');
+                if (bookingSection) {
+                  bookingSection.scrollIntoView({ behavior: 'smooth' });
+                }
+              }}
+          className="px-8 py-4 bg-gradient-to-r from-blush to-champagne text-white font-poppins font-semibold rounded-full hover:shadow-2xl transform hover:scale-105 transition-all duration-300">
             Book Your Transformation
           </button>
         </div>

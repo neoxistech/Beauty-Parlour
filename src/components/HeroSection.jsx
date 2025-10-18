@@ -122,7 +122,7 @@ const HeroSection = () => {
       </div>
 
       {/* Content */}
-      <div className="relative z-50 flex items-center justify-center h-full px-4">
+      <div className="relative flex items-center justify-center h-full px-4">
         <div className="text-center max-w-4xl">
           {/* Logo */}
           <div className={`mb-8 transition-all duration-2000 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
@@ -156,7 +156,15 @@ const HeroSection = () => {
 
           {/* CTA Buttons */}
           <div className={`flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center px-4 transition-all duration-1000 delay-1500 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-            <button className="group relative px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-blush to-accent-pink text-white font-poppins font-semibold rounded-full overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl text-sm sm:text-base">
+            <button 
+              onClick={() => {
+                const bookingSection = document.getElementById('booking-section');
+                if (bookingSection) {
+                  bookingSection.scrollIntoView({ behavior: 'smooth' });
+                }
+              }}
+              className="group relative px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-blush to-accent-pink text-white font-poppins font-semibold rounded-full overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl text-sm sm:text-base"
+            >
               <span className="relative z-10">Book Appointment</span>
               <div className="absolute inset-0 bg-gradient-to-r from-accent-gold to-accent-pink opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               <div className="absolute inset-0 bg-white/20 transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>

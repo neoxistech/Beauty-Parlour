@@ -165,7 +165,16 @@ const ServicesSection = () => {
               </div>
 
               <div className="flex gap-4">
-                <button className="flex-1 px-6 py-3 bg-gradient-to-r from-blush to-champagne text-white font-poppins font-semibold rounded-full hover:shadow-lg transition-shadow">
+                <button 
+                  onClick={() => {
+                    const bookingSection = document.getElementById('booking-section');
+                    if (bookingSection) {
+                      bookingSection.scrollIntoView({ behavior: 'smooth' });
+                    }
+                    setSelectedService(false)
+                  }}
+                  className="flex-1 px-6 py-3 bg-gradient-to-r from-blush to-champagne text-white font-poppins font-semibold rounded-full hover:shadow-lg transition-shadow"
+                >
                   Book Now
                 </button>
                 <button className="px-6 py-3 border-2 border-velvet text-velvet font-poppins font-semibold rounded-full hover:bg-velvet hover:text-white transition-colors">

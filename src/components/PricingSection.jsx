@@ -136,7 +136,7 @@ const PricingSection = () => {
 
       const result = await response.json();
       console.log('Custom pricing inquiry submitted:', result);
-      
+
       setLoading(false);
       setShowSuccess(true);
       setTimeout(() => {
@@ -271,8 +271,8 @@ const PricingSection = () => {
                   <button
                     onClick={scrollToBooking}
                     className={`w-full py-4 rounded-full font-poppins font-semibold transition-all duration-300 transform hover:scale-105 ${plan.popular
-                        ? 'bg-gradient-to-r from-blush to-champagne text-white shadow-lg hover:shadow-xl'
-                        : 'border-2 border-velvet text-velvet hover:bg-velvet hover:text-white'
+                      ? 'bg-gradient-to-r from-blush to-champagne text-white shadow-lg hover:shadow-xl'
+                      : 'border-2 border-velvet text-velvet hover:bg-velvet hover:text-white'
                       }`}
                   >
                     Book This Plan
@@ -521,8 +521,8 @@ const PricingSection = () => {
                       type="submit"
                       disabled={loading}
                       className={`flex-1 px-6 py-3 rounded-full font-poppins font-semibold transition-all duration-300 ${loading
-                          ? "bg-gray-300 text-gray-600 cursor-not-allowed"
-                          : "bg-gradient-to-r from-blush to-champagne text-white hover:shadow-lg"
+                        ? "bg-gray-300 text-gray-600 cursor-not-allowed"
+                        : "bg-gradient-to-r from-blush to-champagne text-white hover:shadow-lg"
                         }`}
                     >
                       {loading ? (

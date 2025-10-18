@@ -32,7 +32,7 @@ const Navbar = () => {
     const observer = new IntersectionObserver(observerCallback, observerOptions)
 
     // Observe all sections
-    const sections = ['hero', 'about', 'services', 'portfolio', 'team', 'pricing', 'booking-section', 'contact']
+    const sections = ['hero', 'about', 'services', 'portfolio', 'testimonials', 'team', 'pricing', 'booking-section', 'contact']
     sections.forEach((sectionId) => {
       const element = document.getElementById(sectionId)
       if (element) {
@@ -46,7 +46,14 @@ const Navbar = () => {
   const scrollToSection = (sectionId) => {
     const element = document.getElementById(sectionId)
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' })
+      // Add a small delay to ensure the element is fully rendered
+      setTimeout(() => {
+        element.scrollIntoView({ 
+          behavior: 'smooth',
+          block: 'start',
+          inline: 'nearest'
+        })
+      }, 100)
     }
     setIsMobileMenuOpen(false)
   }
