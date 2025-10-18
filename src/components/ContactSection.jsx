@@ -254,13 +254,13 @@ const ContactSection = () => {
             {/* Newsletter */}
             <div className="text-center md:text-right">
               <h4 className="font-poppins font-semibold mb-4 text-black/80">Stay Updated</h4>
-              <div className="flex max-w-sm ml-auto">
+              <div className="flex max-w-xs ml-auto">
                 <input
                   type="email"
                   placeholder="Your email"
-                  className="flex-1 px-4 py-2 bg-white/10 border border-black/30 rounded-l-full font-poppins  placeholder-black/60 text-black/80 focus:outline-none focus:border-champagne"
+                  className="w-32 sm:w-40 px-3 py-2 bg-white/10 border border-black/30 rounded-l-full font-poppins text-sm placeholder-black/60 text-black/80 focus:outline-none focus:border-champagne"
                 />
-                <button className="px-6 py-2 bg-gradient-to-r from-blush to-champagne rounded-r-full font-poppins font-semibold hover:shadow-lg transition-shadow duration-300">
+                <button className="px-4 py-2 bg-gradient-to-r from-blush to-champagne rounded-r-full font-poppins font-semibold text-sm hover:shadow-lg transition-shadow duration-300">
                   Subscribe
                 </button>
               </div>
