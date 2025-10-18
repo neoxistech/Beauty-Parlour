@@ -66,6 +66,18 @@ const BookingSection = () => {
   };
 
   const nextStep = () => {
+    // Validate current step before proceeding
+    if (!isStepValid()) {
+      // For step 3, trigger browser validation
+      if (currentStep === 3) {
+        const form = document.querySelector('form');
+        if (form) {
+          form.reportValidity();
+        }
+      }
+      return;
+    }
+    
     if (currentStep < 4) {
       setCurrentStep(currentStep + 1)
     }
@@ -129,7 +141,14 @@ const BookingSection = () => {
     switch (currentStep) {
       case 1: return formData.service.length > 0
       case 2: return formData.date !== '' && formData.time !== ''
-      case 3: return formData.name !== '' && formData.email !== '' && formData.phone !== ''
+      case 3: {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const phoneRegex = /^[\+]?[1-9][\d]{0,15}$/;
+        return formData.name.trim() !== '' && 
+               emailRegex.test(formData.email) && 
+               formData.phone.trim() !== '' && 
+               phoneRegex.test(formData.phone.replace(/[\s\-\(\)]/g, ''));
+      }
       default: return true
     }
   }
@@ -197,7 +216,7 @@ const BookingSection = () => {
         </div>
 
         {/* Booking Form */}
-        <div className={`bg-white/90 backdrop-blur-sm rounded-3xl p-8 shadow-2xl transition-all duration-1000 delay-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+        <form className={`bg-white/90 backdrop-blur-sm rounded-3xl p-8 shadow-2xl transition-all duration-1000 delay-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`} onSubmit={(e) => e.preventDefault()}>
           {/* Step 1: Choose Service */}
           {currentStep === 1 && (
             <div className="space-y-6">
@@ -267,35 +286,61 @@ const BookingSection = () => {
               <h3 className="font-playfair text-2xl font-bold text-velvet text-center mb-8">Your Details</h3>
               <div className="space-y-4">
                 <div>
-                  <label className="block font-poppins font-medium text-velvet mb-2">Full Name</label>
+                  <label className="block font-poppins font-medium text-velvet mb-2">Full Name *</label>
                   <input
                     type="text"
+                    required
+                    minLength="2"
                     value={formData.name}
                     onChange={(e) => handleInputChange('name', e.target.value)}
                     placeholder="Enter your full name"
-                    className="w-full p-4 border-2 border-gray-200 rounded-xl font-poppins focus:border-champagne focus:outline-none transition-colors"
+                    className={`w-full p-4 border-2 rounded-xl font-poppins focus:outline-none transition-colors ${
+                      formData.name.trim() === '' && formData.name !== ''
+                        ? 'border-red-500 focus:border-red-500' 
+                        : 'border-gray-200 focus:border-champagne'
+                    }`}
                   />
+                  {formData.name.trim() === '' && formData.name !== '' && (
+                    <p className="text-red-500 text-sm mt-1 font-poppins">Please enter your full name</p>
+                  )}
                 </div>
                 <div>
-                  <label className="block font-poppins font-medium text-velvet mb-2">Email Address</label>
+                  <label className="block font-poppins font-medium text-velvet mb-2">Email Address *</label>
                   <input
                     type="email"
                     required
                     value={formData.email}
                     onChange={(e) => handleInputChange('email', e.target.value)}
-                    placeholder="Enter your email"
-                    className="w-full p-4 border-2 border-gray-200 rounded-xl font-poppins focus:border-champagne focus:outline-none transition-colors"
+                    placeholder="Enter your email (e.g., john@example.com)"
+                    pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+                    className={`w-full p-4 border-2 rounded-xl font-poppins focus:outline-none transition-colors ${
+                      formData.email !== '' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)
+                        ? 'border-red-500 focus:border-red-500' 
+                        : 'border-gray-200 focus:border-champagne'
+                    }`}
                   />
+                  {formData.email !== '' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email) && (
+                    <p className="text-red-500 text-sm mt-1 font-poppins">Please enter a valid email address</p>
+                  )}
                 </div>
                 <div>
-                  <label className="block font-poppins font-medium text-velvet mb-2">Phone Number</label>
+                  <label className="block font-poppins font-medium text-velvet mb-2">Phone Number *</label>
                   <input
                     type="tel"
+                    required
                     value={formData.phone}
                     onChange={(e) => handleInputChange('phone', e.target.value)}
                     placeholder="Enter your phone number"
-                    className="w-full p-4 border-2 border-gray-200 rounded-xl font-poppins focus:border-champagne focus:outline-none transition-colors"
+                    pattern="[\+]?[1-9][\d]{0,15}"
+                    className={`w-full p-4 border-2 rounded-xl font-poppins focus:outline-none transition-colors ${
+                      formData.phone.trim() === '' && formData.phone !== ''
+                        ? 'border-red-500 focus:border-red-500' 
+                        : 'border-gray-200 focus:border-champagne'
+                    }`}
                   />
+                  {formData.phone.trim() === '' && formData.phone !== '' && (
+                    <p className="text-red-500 text-sm mt-1 font-poppins">Please enter your phone number</p>
+                  )}
                 </div>
               </div>
             </div>
@@ -425,7 +470,7 @@ const BookingSection = () => {
               </button>
             </div>
           )}
-        </div>
+        </form>
 
         {/* Contact Options */}
         <div className={`text-center mt-12 transition-all duration-1000 delay-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
