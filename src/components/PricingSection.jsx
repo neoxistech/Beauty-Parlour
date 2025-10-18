@@ -20,7 +20,7 @@ const PricingSection = () => {
   const sectionRef = useRef(null)
 
   const [loading, setLoading] = useState(false);
-  const scriptURL = import.meta.env.VITE_GOOGLE_SCRIPT_URL; // Add this line (make sure it's in .env)
+  // const scriptURL = import.meta.env.VITE_GOOGLE_SCRIPT_URL; // Add this line (make sure it's in .env)
 
 
   useEffect(() => {
@@ -104,54 +104,54 @@ const PricingSection = () => {
   const handleServiceChange = (service, checked) => {
     setFormData(prev => ({
       ...prev,
-      services: checked 
+      services: checked
         ? [...prev.services, service]
         : prev.services.filter(s => s !== service)
     }))
   }
 
   const handleSubmit = async (e) => {
-  e.preventDefault();
-  setLoading(true);
+    e.preventDefault();
+    setLoading(true);
 
-  try {
-    const formWithType = {
-      ...formData,
-      formType: "customPricing",
-    };
+    try {
+      const formWithType = {
+        ...formData,
+        formType: "customPricing",
+      };
 
-    const response = await fetch(scriptURL, {
-      method: "POST",
-      body: new URLSearchParams(formWithType),
-    });
+      const response = await fetch("https://script.google.com/macros/s/AKfycbyWX8gsnkO4WSzKa9cS7CCGI4OWYcLFXHHO4oeaLccq71OJGtW9Kf_TTqy7lGSk6vhi/exec", {
+        method: "POST",
+        body: new URLSearchParams(formWithType),
+      });
 
-    if (response.ok) {
-      setShowSuccess(true);
-      setTimeout(() => {
-        setShowSuccess(false);
-        setShowCustomForm(false);
-        setFormData({
-          name: "",
-          email: "",
-          phone: "",
-          eventType: "",
-          eventDate: "",
-          guestCount: "",
-          services: [],
-          budget: "",
-          location: "",
-          message: "",
-        });
-      }, 3000);
-    } else {
-      console.error("Error submitting form");
+      if (response.ok) {
+        setShowSuccess(true);
+        setTimeout(() => {
+          setShowSuccess(false);
+          setShowCustomForm(false);
+          setFormData({
+            name: "",
+            email: "",
+            phone: "",
+            eventType: "",
+            eventDate: "",
+            guestCount: "",
+            services: [],
+            budget: "",
+            location: "",
+            message: "",
+          });
+        }, 3000);
+      } else {
+        console.error("Error submitting form");
+      }
+    } catch (error) {
+      console.error("Error sending data:", error);
+    } finally {
+      setLoading(false);
     }
-  } catch (error) {
-    console.error("Error sending data:", error);
-  } finally {
-    setLoading(false);
-  }
-};
+  };
 
   const scrollToBooking = () => {
     const bookingSection = document.getElementById('booking-section')
@@ -203,9 +203,8 @@ const PricingSection = () => {
           {pricingPlans.map((plan, index) => (
             <div
               key={plan.id}
-              className={`relative group transition-all duration-700 ${
-                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-              } ${plan.popular ? 'lg:-translate-y-4' : ''}`}
+              className={`relative group transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+                } ${plan.popular ? 'lg:-translate-y-4' : ''}`}
               style={{ transitionDelay: `${index * 200}ms` }}
               onMouseEnter={() => setHoveredPlan(plan.id)}
               onMouseLeave={() => setHoveredPlan(null)}
@@ -220,9 +219,8 @@ const PricingSection = () => {
               )}
 
               {/* Card */}
-              <div className={`relative bg-white/90 backdrop-blur-sm rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:scale-105 overflow-hidden ${
-                plan.popular ? 'ring-2 ring-champagne/50' : ''
-              }`}>
+              <div className={`relative bg-white/90 backdrop-blur-sm rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:scale-105 overflow-hidden ${plan.popular ? 'ring-2 ring-champagne/50' : ''
+                }`}>
                 {/* Animated Border */}
                 <div className={`absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500`}>
                   <div className={`absolute inset-0 rounded-3xl bg-gradient-to-r ${plan.borderGradient} p-[2px]`}>
@@ -261,13 +259,12 @@ const PricingSection = () => {
                   </div>
 
                   {/* CTA Button */}
-                  <button 
+                  <button
                     onClick={scrollToBooking}
-                    className={`w-full py-4 rounded-full font-poppins font-semibold transition-all duration-300 transform hover:scale-105 ${
-                      plan.popular 
-                        ? 'bg-gradient-to-r from-blush to-champagne text-white shadow-lg hover:shadow-xl' 
+                    className={`w-full py-4 rounded-full font-poppins font-semibold transition-all duration-300 transform hover:scale-105 ${plan.popular
+                        ? 'bg-gradient-to-r from-blush to-champagne text-white shadow-lg hover:shadow-xl'
                         : 'border-2 border-velvet text-velvet hover:bg-velvet hover:text-white'
-                    }`}
+                      }`}
                   >
                     Book This Plan
                   </button>
@@ -337,7 +334,7 @@ const PricingSection = () => {
         {/* Contact for Custom */}
         <div className={`text-center mt-12 transition-all duration-1000 delay-800 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
           <p className="font-poppins text-lg text-velvet/70 mb-4">Need a custom package?</p>
-          <button 
+          <button
             onClick={() => setShowCustomForm(true)}
             className="px-8 py-3 border-2 border-champagne text-champagne font-poppins font-semibold rounded-full hover:bg-champagne hover:text-white transition-all duration-300"
           >
@@ -357,7 +354,7 @@ const PricingSection = () => {
                     <h3 className="font-playfair text-3xl font-bold text-velvet mb-2">Custom Pricing Inquiry</h3>
                     <p className="font-poppins text-velvet/70">Tell us about your event and we'll create a personalized package</p>
                   </div>
-                  <button 
+                  <button
                     onClick={() => setShowCustomForm(false)}
                     className="text-velvet/50 hover:text-velvet transition-colors"
                   >
@@ -512,42 +509,41 @@ const PricingSection = () => {
                       Cancel
                     </button>
                     <button
-  type="submit"
-  disabled={loading}
-  className={`flex-1 px-6 py-3 rounded-full font-poppins font-semibold transition-all duration-300 ${
-    loading
-      ? "bg-gray-300 text-gray-600 cursor-not-allowed"
-      : "bg-gradient-to-r from-blush to-champagne text-white hover:shadow-lg"
-  }`}
->
-  {loading ? (
-    <div className="flex items-center justify-center space-x-2">
-      <svg
-        className="w-5 h-5 text-white animate-spin"
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 24 24"
-      >
-        <circle
-          className="opacity-25"
-          cx="12"
-          cy="12"
-          r="10"
-          stroke="currentColor"
-          strokeWidth="4"
-        ></circle>
-        <path
-          className="opacity-75"
-          fill="currentColor"
-          d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
-        ></path>
-      </svg>
-      <span>Submitting...</span>
-    </div>
-  ) : (
-    "Submit Inquiry"
-  )}
-</button>
+                      type="submit"
+                      disabled={loading}
+                      className={`flex-1 px-6 py-3 rounded-full font-poppins font-semibold transition-all duration-300 ${loading
+                          ? "bg-gray-300 text-gray-600 cursor-not-allowed"
+                          : "bg-gradient-to-r from-blush to-champagne text-white hover:shadow-lg"
+                        }`}
+                    >
+                      {loading ? (
+                        <div className="flex items-center justify-center space-x-2">
+                          <svg
+                            className="w-5 h-5 text-white animate-spin"
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                          >
+                            <circle
+                              className="opacity-25"
+                              cx="12"
+                              cy="12"
+                              r="10"
+                              stroke="currentColor"
+                              strokeWidth="4"
+                            ></circle>
+                            <path
+                              className="opacity-75"
+                              fill="currentColor"
+                              d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+                            ></path>
+                          </svg>
+                          <span>Submitting...</span>
+                        </div>
+                      ) : (
+                        "Submit Inquiry"
+                      )}
+                    </button>
                   </div>
                 </form>
               </>
@@ -568,7 +564,7 @@ const PricingSection = () => {
                 <p className="font-poppins text-sm text-velvet/60">
                   We'll contact you at {formData.email} with your custom package details.
                 </p>
-                
+
                 {/* Confetti Effect */}
                 <div className="absolute inset-0 pointer-events-none">
                   {[...Array(20)].map((_, i) => (

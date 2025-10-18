@@ -94,7 +94,7 @@ const BookingSection = () => {
     formDataToSend.append('confirmation', 'Pending');
 
     // Send data to Google Sheet via Web App using FormData
-    fetch("https://script.google.com/macros/s/AKfycby6OvKJ_7Hd9QobgdJRedzUzY99ohx1eBMGdFfd69LilB9cN7PlryMXQUz6px_Eka5U/exec", {
+    fetch("https://script.google.com/macros/s/AKfycbyWX8gsnkO4WSzKa9cS7CCGI4OWYcLFXHHO4oeaLccq71OJGtW9Kf_TTqy7lGSk6vhi/exec", {
       method: "POST",
       body: formDataToSend
     })

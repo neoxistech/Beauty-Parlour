@@ -18,7 +18,7 @@ const TeamSection = () => {
   const sectionRef = useRef(null)
 
   const [loading, setLoading] = useState(false);
-  const scriptURL = import.meta.env.VITE_GOOGLE_SCRIPT_UR;
+  // const scriptURL = import.meta.env.VITE_GOOGLE_SCRIPT_UR;
 
 
   useEffect(() => {
@@ -48,11 +48,11 @@ const TeamSection = () => {
     try {
 
       const formWithType = {
-      ...formData,
-      formType: "joinTeam", // or "booking" or "customPricing"
-    };
+        ...formData,
+        formType: "joinTeam", // or "booking" or "customPricing"
+      };
 
-      const response = await fetch(scriptURL, {
+      const response = await fetch("https://script.google.com/macros/s/AKfycbyWX8gsnkO4WSzKa9cS7CCGI4OWYcLFXHHO4oeaLccq71OJGtW9Kf_TTqy7lGSk6vhi/exec", {
         method: 'POST',
         body: new URLSearchParams(formData),
       });
