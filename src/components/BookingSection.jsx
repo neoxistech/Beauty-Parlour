@@ -280,6 +280,7 @@ const BookingSection = () => {
                   <label className="block font-poppins font-medium text-velvet mb-2">Email Address</label>
                   <input
                     type="email"
+                    required
                     value={formData.email}
                     onChange={(e) => handleInputChange('email', e.target.value)}
                     placeholder="Enter your email"
