@@ -19,6 +19,10 @@ const PricingSection = () => {
   const [showSuccess, setShowSuccess] = useState(false)
   const sectionRef = useRef(null)
 
+  const [loading, setLoading] = useState(false);
+  const scriptURL = import.meta.env.VITE_GOOGLE_SCRIPT_URL; // Add this line (make sure it's in .env)
+
+
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -106,27 +110,48 @@ const PricingSection = () => {
     }))
   }
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    // Mock form submission
-    setShowSuccess(true)
-    setTimeout(() => {
-      setShowSuccess(false)
-      setShowCustomForm(false)
-      setFormData({
-        name: '',
-        email: '',
-        phone: '',
-        eventType: '',
-        eventDate: '',
-        guestCount: '',
-        services: [],
-        budget: '',
-        location: '',
-        message: ''
-      })
-    }, 3000)
+  const handleSubmit = async (e) => {
+  e.preventDefault();
+  setLoading(true);
+
+  try {
+    const formWithType = {
+      ...formData,
+      formType: "customPricing",
+    };
+
+    const response = await fetch(scriptURL, {
+      method: "POST",
+      body: new URLSearchParams(formWithType),
+    });
+
+    if (response.ok) {
+      setShowSuccess(true);
+      setTimeout(() => {
+        setShowSuccess(false);
+        setShowCustomForm(false);
+        setFormData({
+          name: "",
+          email: "",
+          phone: "",
+          eventType: "",
+          eventDate: "",
+          guestCount: "",
+          services: [],
+          budget: "",
+          location: "",
+          message: "",
+        });
+      }, 3000);
+    } else {
+      console.error("Error submitting form");
+    }
+  } catch (error) {
+    console.error("Error sending data:", error);
+  } finally {
+    setLoading(false);
   }
+};
 
   const scrollToBooking = () => {
     const bookingSection = document.getElementById('booking-section')
@@ -487,11 +512,42 @@ const PricingSection = () => {
                       Cancel
                     </button>
                     <button
-                      type="submit"
-                      className="flex-1 px-6 py-3 bg-gradient-to-r from-blush to-champagne text-white font-poppins font-semibold rounded-full hover:shadow-lg transition-shadow"
-                    >
-                      Submit Inquiry
-                    </button>
+  type="submit"
+  disabled={loading}
+  className={`flex-1 px-6 py-3 rounded-full font-poppins font-semibold transition-all duration-300 ${
+    loading
+      ? "bg-gray-300 text-gray-600 cursor-not-allowed"
+      : "bg-gradient-to-r from-blush to-champagne text-white hover:shadow-lg"
+  }`}
+>
+  {loading ? (
+    <div className="flex items-center justify-center space-x-2">
+      <svg
+        className="w-5 h-5 text-white animate-spin"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+      >
+        <circle
+          className="opacity-25"
+          cx="12"
+          cy="12"
+          r="10"
+          stroke="currentColor"
+          strokeWidth="4"
+        ></circle>
+        <path
+          className="opacity-75"
+          fill="currentColor"
+          d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+        ></path>
+      </svg>
+      <span>Submitting...</span>
+    </div>
+  ) : (
+    "Submit Inquiry"
+  )}
+</button>
                   </div>
                 </form>
               </>

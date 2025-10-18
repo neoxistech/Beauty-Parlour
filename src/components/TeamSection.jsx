@@ -1,5 +1,8 @@
 import { useState, useEffect, useRef } from 'react'
 
+
+
+
 const TeamSection = () => {
   const [isVisible, setIsVisible] = useState(false)
   const [hoveredMember, setHoveredMember] = useState(null)
@@ -15,6 +18,10 @@ const TeamSection = () => {
   })
   const [showSuccess, setShowSuccess] = useState(false)
   const sectionRef = useRef(null)
+
+  const [loading, setLoading] = useState(false);
+  const scriptURL = import.meta.env.VITE_GOOGLE_SCRIPT_UR;
+
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -37,24 +44,44 @@ const TeamSection = () => {
     setFormData(prev => ({ ...prev, [field]: value }))
   }
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    // Mock form submission
-    setShowSuccess(true)
-    setTimeout(() => {
-      setShowSuccess(false)
-      setShowJoinForm(false)
-      setFormData({
-        name: '',
-        email: '',
-        phone: '',
-        position: '',
-        experience: '',
-        portfolio: '',
-        message: ''
-      })
-    }, 3000)
-  }
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+
+      const formWithType = {
+      ...formData,
+      formType: "joinTeam", // or "booking" or "customPricing"
+    };
+
+      const response = await fetch(scriptURL, {
+        method: 'POST',
+        body: new URLSearchParams(formData),
+      });
+
+      if (response.ok) {
+        setShowSuccess(true);
+        setTimeout(() => {
+          setShowSuccess(false);
+          setShowJoinForm(false);
+          setFormData({
+            name: '',
+            email: '',
+            phone: '',
+            position: '',
+            experience: '',
+            portfolio: '',
+            message: ''
+          });
+        }, 3000);
+      } else {
+        console.error('Error submitting form');
+      }
+    } catch (error) {
+      console.error('Error sending data:', error);
+    }
+  };
+
 
   const positions = [
     'Makeup Artist',
@@ -353,7 +380,7 @@ const TeamSection = () => {
                     </select>
                   </div>
 
-                  {/* <div>
+                  <div>
                     <label className="block font-poppins font-medium text-velvet mb-2">Portfolio/Website URL</label>
                     <input
                       type="url"
@@ -362,7 +389,7 @@ const TeamSection = () => {
                       className="w-full p-3 border-2 border-gray-200 rounded-xl font-poppins focus:border-champagne focus:outline-none transition-colors"
                       placeholder="https://your-portfolio.com"
                     />
-                  </div> */}
+                  </div>
 
                   <div>
                     <label className="block font-poppins font-medium text-velvet mb-2">Why do you want to join LUXURY STUDIO? *</label>
@@ -386,10 +413,22 @@ const TeamSection = () => {
                     </button>
                     <button
                       type="submit"
-                      className="flex-1 px-6 py-3 bg-gradient-to-r from-blush to-champagne text-white font-poppins font-semibold rounded-full hover:shadow-lg transition-shadow"
+                      disabled={loading}
+                      className="flex-1 px-6 py-3 bg-gradient-to-r from-blush to-champagne text-white font-poppins font-semibold rounded-full hover:shadow-lg transition-shadow flex items-center justify-center"
                     >
-                      Submit Application
+                      {loading ? (
+                        <>
+                          <svg className="animate-spin h-5 w-5 mr-2 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+                          </svg>
+                          Sending...
+                        </>
+                      ) : (
+                        'Submit Application'
+                      )}
                     </button>
+
                   </div>
                 </form>
               </>
