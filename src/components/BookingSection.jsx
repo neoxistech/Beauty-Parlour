@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-escape */
 import { useState, useEffect, useRef } from 'react'
 
 const BookingSection = () => {
@@ -77,7 +78,7 @@ const BookingSection = () => {
       }
       return;
     }
-    
+
     if (currentStep < 4) {
       setCurrentStep(currentStep + 1)
     }
@@ -144,10 +145,10 @@ const BookingSection = () => {
       case 3: {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         const phoneRegex = /^[\+]?[1-9][\d]{0,15}$/;
-        return formData.name.trim() !== '' && 
-               emailRegex.test(formData.email) && 
-               formData.phone.trim() !== '' && 
-               phoneRegex.test(formData.phone.replace(/[\s\-\(\)]/g, ''));
+        return formData.name.trim() !== '' &&
+          emailRegex.test(formData.email) &&
+          formData.phone.trim() !== '' &&
+          phoneRegex.test(formData.phone.replace(/[\s\-\(\)]/g, ''));
       }
       default: return true
     }
@@ -294,11 +295,10 @@ const BookingSection = () => {
                     value={formData.name}
                     onChange={(e) => handleInputChange('name', e.target.value)}
                     placeholder="Enter your full name"
-                    className={`w-full p-4 border-2 rounded-xl font-poppins focus:outline-none transition-colors ${
-                      formData.name.trim() === '' && formData.name !== ''
-                        ? 'border-red-500 focus:border-red-500' 
+                    className={`w-full p-4 border-2 rounded-xl font-poppins focus:outline-none transition-colors ${formData.name.trim() === '' && formData.name !== ''
+                        ? 'border-red-500 focus:border-red-500'
                         : 'border-gray-200 focus:border-champagne'
-                    }`}
+                      }`}
                   />
                   {formData.name.trim() === '' && formData.name !== '' && (
                     <p className="text-red-500 text-sm mt-1 font-poppins">Please enter your full name</p>
@@ -313,11 +313,10 @@ const BookingSection = () => {
                     onChange={(e) => handleInputChange('email', e.target.value)}
                     placeholder="Enter your email (e.g., john@example.com)"
                     pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
-                    className={`w-full p-4 border-2 rounded-xl font-poppins focus:outline-none transition-colors ${
-                      formData.email !== '' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)
-                        ? 'border-red-500 focus:border-red-500' 
+                    className={`w-full p-4 border-2 rounded-xl font-poppins focus:outline-none transition-colors ${formData.email !== '' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)
+                        ? 'border-red-500 focus:border-red-500'
                         : 'border-gray-200 focus:border-champagne'
-                    }`}
+                      }`}
                   />
                   {formData.email !== '' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email) && (
                     <p className="text-red-500 text-sm mt-1 font-poppins">Please enter a valid email address</p>
@@ -332,11 +331,10 @@ const BookingSection = () => {
                     onChange={(e) => handleInputChange('phone', e.target.value)}
                     placeholder="Enter your phone number"
                     pattern="[\+]?[1-9][\d]{0,15}"
-                    className={`w-full p-4 border-2 rounded-xl font-poppins focus:outline-none transition-colors ${
-                      formData.phone.trim() === '' && formData.phone !== ''
-                        ? 'border-red-500 focus:border-red-500' 
+                    className={`w-full p-4 border-2 rounded-xl font-poppins focus:outline-none transition-colors ${formData.phone.trim() === '' && formData.phone !== ''
+                        ? 'border-red-500 focus:border-red-500'
                         : 'border-gray-200 focus:border-champagne'
-                    }`}
+                      }`}
                   />
                   {formData.phone.trim() === '' && formData.phone !== '' && (
                     <p className="text-red-500 text-sm mt-1 font-poppins">Please enter your phone number</p>
