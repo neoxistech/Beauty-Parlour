@@ -296,8 +296,8 @@ const BookingSection = () => {
                     onChange={(e) => handleInputChange('name', e.target.value)}
                     placeholder="Enter your full name"
                     className={`w-full p-4 border-2 rounded-xl font-poppins focus:outline-none transition-colors ${formData.name.trim() === '' && formData.name !== ''
-                        ? 'border-red-500 focus:border-red-500'
-                        : 'border-gray-200 focus:border-champagne'
+                      ? 'border-red-500 focus:border-red-500'
+                      : 'border-gray-200 focus:border-champagne'
                       }`}
                   />
                   {formData.name.trim() === '' && formData.name !== '' && (
@@ -314,8 +314,8 @@ const BookingSection = () => {
                     placeholder="Enter your email (e.g., john@example.com)"
                     pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
                     className={`w-full p-4 border-2 rounded-xl font-poppins focus:outline-none transition-colors ${formData.email !== '' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)
-                        ? 'border-red-500 focus:border-red-500'
-                        : 'border-gray-200 focus:border-champagne'
+                      ? 'border-red-500 focus:border-red-500'
+                      : 'border-gray-200 focus:border-champagne'
                       }`}
                   />
                   {formData.email !== '' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email) && (
@@ -332,8 +332,8 @@ const BookingSection = () => {
                     placeholder="Enter your phone number"
                     pattern="[\+]?[1-9][\d]{0,15}"
                     className={`w-full p-4 border-2 rounded-xl font-poppins focus:outline-none transition-colors ${formData.phone.trim() === '' && formData.phone !== ''
-                        ? 'border-red-500 focus:border-red-500'
-                        : 'border-gray-200 focus:border-champagne'
+                      ? 'border-red-500 focus:border-red-500'
+                      : 'border-gray-200 focus:border-champagne'
                       }`}
                   />
                   {formData.phone.trim() === '' && formData.phone !== '' && (
@@ -538,31 +538,7 @@ const BookingSection = () => {
         </div>
       )} */}
 
-      {isLoading && (
-        <div className="fixed inset-0 bg-black/50 flex flex-col items-center justify-center z-50">
-          {/* Spinner */}
-          <div className="w-20 h-20 bg-gradient-to-r from-blush to-champagne rounded-full flex items-center justify-center animate-spin">
-            <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center">
-              <div className="w-8 h-8 bg-gradient-to-r from-blush to-champagne rounded-full animate-pulse"></div>
-            </div>
-          </div>
 
-          {/* Loading Text */}
-          <h3 className="mt-6 font-playfair text-2xl md:text-3xl font-bold text-white">
-            Confirming Your Booking...
-          </h3>
-          <p className="mt-2 font-poppins text-white/80 text-center max-w-sm">
-            Please wait while we process your appointment request.
-          </p>
-
-          {/* Animated Dots */}
-          <div className="flex space-x-1 mt-4">
-            <div className="w-2 h-2 bg-white rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
-            <div className="w-2 h-2 bg-white rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
-            <div className="w-2 h-2 bg-white rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
-          </div>
-        </div>
-      )}
 
 
 
