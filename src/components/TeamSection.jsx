@@ -44,39 +44,47 @@ const TeamSection = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
     try {
+      // Create FormData to avoid CORS issues
+      const formDataToSend = new FormData();
+      formDataToSend.append('formType', 'joinTeam');
+      formDataToSend.append('name', formData.name);
+      formDataToSend.append('email', formData.email);
+      formDataToSend.append('phone', formData.phone);
+      formDataToSend.append('position', formData.position);
+      formDataToSend.append('experience', formData.experience);
+      formDataToSend.append('portfolio', formData.portfolio);
+      formDataToSend.append('message', formData.message);
 
-      const formWithType = {
-        ...formData,
-        formType: "joinTeam", // or "booking" or "customPricing"
-      };
-
-      const response = await fetch("https://script.google.com/macros/s/AKfycbyWX8gsnkO4WSzKa9cS7CCGI4OWYcLFXHHO4oeaLccq71OJGtW9Kf_TTqy7lGSk6vhi/exec", {
+      const response = await fetch("https://script.google.com/macros/s/AKfycbw1LgJqaPWkf7T8ixg4ih0wMnI3BplOw2fvxr857sUxt8jiX-XscjNDhDKJvsmZ0JbR/exec", {
         method: 'POST',
-        body: new URLSearchParams(formData),
+        body: formDataToSend,
       });
 
-      if (response.ok) {
-        setShowSuccess(true);
-        setTimeout(() => {
-          setShowSuccess(false);
-          setShowJoinForm(false);
-          setFormData({
-            name: '',
-            email: '',
-            phone: '',
-            position: '',
-            experience: '',
-            portfolio: '',
-            message: ''
-          });
-        }, 3000);
-      } else {
-        console.error('Error submitting form');
-      }
+      const result = await response.json();
+      console.log('Team application submitted:', result);
+
+      setLoading(false);
+      setShowSuccess(true);
+      setTimeout(() => {
+        setShowSuccess(false);
+        setShowJoinForm(false);
+        setFormData({
+          name: '',
+          email: '',
+          phone: '',
+          position: '',
+          experience: '',
+          portfolio: '',
+          message: ''
+        });
+      }, 3000);
     } catch (error) {
       console.error('Error sending data:', error);
+      setLoading(false);
+      alert('There was an error submitting your application. Please try again.');
     }
   };
 

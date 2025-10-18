@@ -84,7 +84,7 @@ const BookingSection = () => {
 
     // Create FormData instead of JSON to avoid CORS issues
     const formDataToSend = new FormData();
-    formDataToSend.append('formType', 'Booking'); // ✅ added
+    formDataToSend.append('formType', 'booking');
     formDataToSend.append('services', formData.service.join(','));
     formDataToSend.append('date', formData.date);
     formDataToSend.append('time', formData.time);
@@ -94,7 +94,7 @@ const BookingSection = () => {
     formDataToSend.append('confirmation', 'Pending');
 
     // Send data to Google Sheet via Web App using FormData
-    fetch("https://script.google.com/macros/s/AKfycbyWX8gsnkO4WSzKa9cS7CCGI4OWYcLFXHHO4oeaLccq71OJGtW9Kf_TTqy7lGSk6vhi/exec", {
+    fetch("https://script.google.com/macros/s/AKfycbw1LgJqaPWkf7T8ixg4ih0wMnI3BplOw2fvxr857sUxt8jiX-XscjNDhDKJvsmZ0JbR/exec", {
       method: "POST",
       body: formDataToSend
     })

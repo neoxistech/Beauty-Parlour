@@ -115,41 +115,50 @@ const PricingSection = () => {
     setLoading(true);
 
     try {
-      const formWithType = {
-        ...formData,
-        formType: "customPricing",
-      };
+      // Create FormData to avoid CORS issues
+      const formDataToSend = new FormData();
+      formDataToSend.append('formType', 'customPricing');
+      formDataToSend.append('name', formData.name);
+      formDataToSend.append('email', formData.email);
+      formDataToSend.append('phone', formData.phone);
+      formDataToSend.append('eventType', formData.eventType);
+      formDataToSend.append('eventDate', formData.eventDate);
+      formDataToSend.append('guestCount', formData.guestCount);
+      formDataToSend.append('services', formData.services.join(', '));
+      formDataToSend.append('budget', formData.budget);
+      formDataToSend.append('location', formData.location);
+      formDataToSend.append('message', formData.message);
 
-      const response = await fetch("https://script.google.com/macros/s/AKfycbyWX8gsnkO4WSzKa9cS7CCGI4OWYcLFXHHO4oeaLccq71OJGtW9Kf_TTqy7lGSk6vhi/exec", {
+      const response = await fetch("https://script.google.com/macros/s/AKfycbw1LgJqaPWkf7T8ixg4ih0wMnI3BplOw2fvxr857sUxt8jiX-XscjNDhDKJvsmZ0JbR/exec", {
         method: "POST",
-        body: new URLSearchParams(formWithType),
+        body: formDataToSend,
       });
 
-      if (response.ok) {
-        setShowSuccess(true);
-        setTimeout(() => {
-          setShowSuccess(false);
-          setShowCustomForm(false);
-          setFormData({
-            name: "",
-            email: "",
-            phone: "",
-            eventType: "",
-            eventDate: "",
-            guestCount: "",
-            services: [],
-            budget: "",
-            location: "",
-            message: "",
-          });
-        }, 3000);
-      } else {
-        console.error("Error submitting form");
-      }
+      const result = await response.json();
+      console.log('Custom pricing inquiry submitted:', result);
+      
+      setLoading(false);
+      setShowSuccess(true);
+      setTimeout(() => {
+        setShowSuccess(false);
+        setShowCustomForm(false);
+        setFormData({
+          name: "",
+          email: "",
+          phone: "",
+          eventType: "",
+          eventDate: "",
+          guestCount: "",
+          services: [],
+          budget: "",
+          location: "",
+          message: "",
+        });
+      }, 3000);
     } catch (error) {
       console.error("Error sending data:", error);
-    } finally {
       setLoading(false);
+      alert('There was an error submitting your inquiry. Please try again.');
     }
   };
 
